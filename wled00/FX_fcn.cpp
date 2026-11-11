@@ -1251,11 +1251,7 @@ void WS2812FX::finalizeInit() {
     #if !defined(CONFIG_IDF_TARGET_ESP32C3) && !defined(ESP8266)
     bool usesI2S = (bus.iType & 0x01) == 0; // I2S bus types are even numbered, can't use bus.driverType == 1 as getI() may have defaulted to RMT
     if (Bus::isDigital(bus.type) && !Bus::is2Pin(bus.type) && usesI2S) {
-      #ifdef NPB_CONF_4STEP_CADENCE
-      constexpr unsigned stepFactor = 4; // 4 step cadence (4 bits per pixel bit)
-      #else
-      constexpr unsigned stepFactor = 3; // 3 step cadence (3 bits per pixel bit)
-      #endif
+      const unsigned stepFactor = BusManager::i2sCadence(bus.iType); // DMA bits per pixel bit: 3 or 4 step cadence, depends on build and LED type
       unsigned i2sCommonMem = (stepFactor * bus.count * (3*Bus::hasRGB(bus.type)+Bus::hasWhite(bus.type)+Bus::hasCCT(bus.type)) * (Bus::is16bit(bus.type)+1));
       if (useParallelI2S) i2sCommonMem *= 8; // parallel I2S uses 8 channels, requiring 8x the DMA buffer size (common buffer shared between all parallel busses)
       if (i2sCommonMem > I2SdmaMem) I2SdmaMem = i2sCommonMem;

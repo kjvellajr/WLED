@@ -551,6 +551,7 @@ namespace BusManager {
   void            applyABL();                   // apply automatic brightness limiter, global or per bus
 
   uint8_t getI(uint8_t busType, const uint8_t* pins, uint8_t driverPreference); // workaround for access to PolyBus function from FX_fcn.cpp
+  unsigned i2sCadence(uint8_t iType); // I2S DMA bits per pixel bit for an internal bus type as returned by getI()
 
   //do not call this method from system context (network callback)
   void removeAll();
