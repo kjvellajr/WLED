@@ -363,6 +363,9 @@ std::vector<LEDType> BusDigital::getLEDTypes() {
     {TYPE_FW1906,        "D",  PSTR("FW1906/WS2811 RGBCCT")},
     {TYPE_WS2805,        "D",  PSTR("WS2805 RGBCCT")},
     {TYPE_SM16825,       "D",  PSTR("SM16825 RGBCCT")},
+    #ifdef ARDUINO_ARCH_ESP32
+    {TYPE_SM16825_H706C, "D",  PSTR("Govee H706C RGBCCT")}, // SM16825 pixels with an 11-byte header
+    #endif
     {TYPE_WS2812_1CH_X3, "D",  PSTR("WS2811 White")},
     {TYPE_WS2812_WWA,    "D",  PSTR("WS281x WWA")}, // amber ignored
     {TYPE_WS2801,        "2P", PSTR("WS2801 RGB")},
